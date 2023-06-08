@@ -1,0 +1,41 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+<div class="container">
+<div class="card">
+<table style="color:aliceblue" class="centered blue-grey">
+    <thead>
+      <tr style="border-width: 10px;">
+          <th>Delivery Number</th>
+          <th>Address</th>
+          <th>Comment</th>
+          <th>When Created</th>
+          <th>Who ordered</th>
+          <th>Was Delivered</th>
+          <th></th>
+      </tr>
+    </thead>
+    {% for Delivery in delivery %}
+    <tbody>
+      <tr>
+        <td>{{Delivery.id}}</td>
+        <td>{{Delivery.address}}</td>
+        <td>{% if len(Delivery.comment) > 20 %}
+            <a class="waves-effect waves-light btn-small" href="{{url_for('order.see_comment',id=Delivery.id)}}" >See Comment</a>
+            {% else %} {{Delivery.comment}} {% endif %}</td>
+        <td>{{Delivery.created.strftime("%d/%m/%Y - %H:%M")}}</td>
+        <td>{{Delivery.cart.user.username}} ({{Delivery.cart.user.first_name}}  {{Delivery.cart.user.last_name}})</td>
+        <td>{% if Delivery.is_delivered == True %} Yes {% else %} No </td>
+        <td><form action="{{url_for('order.change_delivery_status',id = Delivery.id)}}" method="POST"> 
+            <button class="waves-effect waves-light btn-small" type="submit">Delivery has Arrived</button>
+            </form>{% endif %}
+        </td>
+      </tr>
+    </tbody>
+    {% endfor %}
+</table>
+</div>
+</div>
+
+
+
+{% endblock %}

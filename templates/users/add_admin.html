@@ -1,0 +1,16 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+<div style="margin-top: 200px;" class="container">
+<form action="{{url_for('user.add_admin',id = current_user.id)}}" method="POST">
+  <div style="margin-bottom: 20px;" class="center">
+    <button type="submit" class="waves-effect waves-light btn-large">Add Admin</button>
+  </div>
+    <select style="border-color: black ;" class="browser-default" name="user_id">
+      <option value="" disabled selected>Choose a User</option>
+      {% for user in users %}
+      <option style="font-size: larger;" value="{{user.id}}">"{{user.username}}" - {{user.first_name}} {{user.last_name}}</option>
+      {% endfor %}
+    </select>
+</form>
+</div>
+{% endblock %}

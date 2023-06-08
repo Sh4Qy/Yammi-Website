@@ -1,0 +1,25 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+{% with success = get_flashed_messages(category_filter=['success']) %}
+{% if success %}
+    {% for message in success %}
+        <div  class="card-panel white-text teal lighten-3">{{message}}</div>
+    {% endfor %}
+{% endif %} 
+{% endwith %}
+<div style="display: flex;flex-wrap: wrap;">
+{% for category in categories %}
+    <div style="width: 400px;height: 300px;margin-top: 50px;" class="container">
+      <div class="card">
+        <div class="card-image">
+          <a href="{{url_for('dish.show_dishes',id=category.id)}}">
+          <img style="width: 400px;height: 300px;"  src="{{url_for('static', filename=category.image)}}">
+          </a>
+          <span style="font-weight: bold;background-color: rgba(0,0,0,0.5);border-radius: 10px;padding: 10px;" class="card-title">{{category.name}}</span>
+        </div>
+      </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

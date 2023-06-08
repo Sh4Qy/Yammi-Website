@@ -1,0 +1,39 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+<div style="font-weight: bold;margin-top: 100px;" class="container">
+<form action="{{url_for('dish.add_dish')}}" method="POST">
+    <div>{{form.name.label (style="font-size:20px")}}</div>
+    <div>{{form.name}}</div>
+    <div>{{form.price.label (style="font-size:20px")}}</div>
+    <div>{{form.price}}</div>
+    <div>{{form.description.label (style="font-size:20px")}}</div>
+    <div>{{form.description}}</div>
+    <div>{{form.image.label (style="font-size:20px")}}</div>
+    <div>{{form.image}}</div>
+    <p>
+        <label>
+            {{form.is_gluten_free (class="filled-in")}}
+            <span>{{form.is_gluten_free.label (style="font-size:15px")}}</span>
+        </label>
+    </p>
+    <p>
+        <label>
+            {{form.is_vegeterian (class="filled-in")}}
+            <span>{{form.is_vegeterian.label (style="font-size:15px")}}</span>
+        </label>
+    </p>
+    <div class="input-field col s12 m6">
+        <select class="browser-default" name="category" required>
+          <option value="" disabled selected>Choose Dish Category</option>
+          {% for Category in category %}
+          <option value="{{Category.id}}">{{Category.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="center">
+    <button type="submit" class="waves-effect waves-light btn-large">Add Dish</button>
+</div>
+</form>
+</div>
+
+{% endblock %}

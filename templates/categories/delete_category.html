@@ -1,0 +1,19 @@
+{% extends 'layouts/admin_layout.html' %} {% block content %}
+<div class="center">
+  <h1>Are you sure you want to delete</h1>
+  <div class="row">
+    <div style="width: 400px;height: 300px;" class="container">
+      <div class="card">
+        <div class="card-image">
+          <img style="width: 400px;height: 300px;" src="{{url_for('static', filename=category.image)}}">
+          <span style="font-weight: bold;background-color: rgba(0,0,0,0.5);border-radius: 10px;padding: 10px;" class="card-title">{{category.name}}</span>
+        </div>
+      </div>
+</div>
+</div>
+<form  action="{{url_for('category.delete_category',id=category.id)}}" method="POST">
+  <button class="waves-effect waves-light btn red lighten-1" type="submit">Delete</button>
+  <a class="waves-effect waves-light btn" href="{{url_for('category.category_management')}}">Cancel</a>
+</form>
+</div>
+{% endblock %}

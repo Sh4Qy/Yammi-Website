@@ -1,0 +1,42 @@
+{% extends 'layouts/admin_layout.html' %}
+{% block content %}
+<div style="font-weight: bold;margin-top: 100px;" class="container">
+<form action="{{url_for('dish.edit_dish',id=dish.id)}}" method="POST">
+    <div>{{form.name.label (style="font-size:20px")}}</div>
+    <div>{{form.name (value=dish.name)}}</div>
+    <div>{{form.price.label (style="font-size:20px")}}</div>
+    <div>{{form.price (value=dish.price)}}</div>
+    <div>{{form.description.label (style="font-size:20px")}}</div>
+    <div>{{form.description (value=dish.description)}}</div>
+    <div>{{form.image.label (style="font-size:20px")}}</div>
+    <div>{{form.image (value=dish.image)}}</div>
+    <p>
+        <label>
+            {{form.is_gluten_free (class="filled-in", checked=dish.is_gluten_free)}}
+            <span>{{form.is_gluten_free.label (style="font-size:15px")}}</span>
+        </label>
+    </p>
+    <p>
+        <label>
+            {{form.is_vegeterian (class="filled-in", checked=dish.is_vegeterian)}}
+            <span>{{form.is_vegeterian.label (style="font-size:15px")}}</span>
+        </label>
+    </p>
+    <div class="input-field col s12 m6">
+        
+        <select class="browser-default" name="category">
+        {% for Category in category %}
+        {% if dish.category == Category %}
+        <option value="{{Category.id}}" selected>{{Category.name}}</option>
+        {% else %}
+          <option value="{{Category.id}}">{{Category.name}}</option>
+        {% endif %}
+        {% endfor %}
+        </select>
+      </div>
+      <div class="center">
+    <button type="submit" class="waves-effect waves-light btn">Save</button>
+</div>
+</form>
+</div>
+{% endblock %}

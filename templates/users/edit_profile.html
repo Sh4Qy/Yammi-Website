@@ -1,0 +1,50 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+<a class="waves-effect waves-light btn grey darken-1" style="margin: 50px 0px 0px 0px" href="{{url_for('category.menu')}}">Back</a>
+<form style="margin: 100px 100px 0px 0px;" action="{{url_for('user.edit_profile')}}" method="POST" novalidate>
+    {{ email_form.csrf_token }}
+    <div>{{form.username.label (style="color:black; font-size:20px")}}</div>
+    <div>{{form.username (value=current_user.username)}}</div>
+    {% with error = get_flashed_messages(category_filter=['username error']) %}
+    {% if error %}
+    {% for message in error %}
+            <div  class="card-panel white-text red darken-2">{{message}}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div>{{form.new_password.label (style="color:black; font-size:20px")}}</div>
+    <div>{{form.new_password (value=current_user.password)}}</div>
+    <div>{{form.first_name.label (style="color:black; font-size:20px")}}</div>
+    <div>{{form.first_name (value=current_user.first_name)}}</div>
+    {% with error = get_flashed_messages(category_filter=['first_name error']) %}
+    {% if error %}
+    {% for message in error %}
+            <div  class="card-panel white-text red darken-2">{{message}}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div>{{form.last_name.label (style="color:black; font-size:20px")}}</div>
+    <div>{{form.last_name (value=current_user.last_name)}}</div>
+    {% with error = get_flashed_messages(category_filter=['last_name error']) %}
+    {% if error %}
+    {% for message in error %}
+            <div  class="card-panel white-text red darken-2">{{message}}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div>{{email_form.email.label (style="color:black; font-size:20px")}}</div>
+    <div>{{email_form.email (value=current_user.email)}}</div>
+    {% for message in email_form.email.errors %}
+    <div style="padding: 20px;background-color: red;color: white">{{message}}</div>
+    {% endfor %}
+    {% with error = get_flashed_messages(category_filter=['email error']) %}
+    {% if error %}
+    {% for message in error %}
+            <div  class="card-panel white-text red darken-2">{{message}}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="center"><button type="submit" class="waves-effect waves-light btn-large grey darken-1">Save</button></div>
+</form>
+{% endblock %}

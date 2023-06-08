@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yammi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body style="background-color: rgb(215, 214, 214);">
+  <div class="row">
+    <nav>
+        <div class="nav-wrapper light pink darken-4">
+          <a style="font-weight: bold;" href="{{url_for('category.menu')}}" class="brand-logo center">Yammy - Menu</a>
+          <ul id="nav-mobile">
+            <li class="right"><a href="{{url_for('user.log_out')}}">Log Out</a></li>
+            <li class="right"><a href="{{url_for('user.edit_profile')}}">Edit Profile</a></li>
+            <li><a href="{{url_for('order.show_cart')}}">My Cart {% if len(current_user.carts[-1].dish_association) %} <span style="background-color: red;border-radius: 20px;padding: 1px 7px 1px 5px;">{{item_amount(current_user)}}{% endif %}</span> </a></li>
+            <li><a href="{{url_for('order.orders_history')}}">Order History</a></li>
+          </ul>
+        </div>
+      </nav>
+      </div>
+    {% block content %}
+    {% endblock %}     
+</body>
+</html>

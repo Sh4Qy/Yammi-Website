@@ -1,0 +1,21 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+<div class="center">
+  <h2>Are you sure you want to remove this dish from your cart</h2>
+  <div class="row">
+    <div style="width: 400px;height: 400px;" class="container">
+      <div class="card">
+        <div class="card-image">
+          <img style="width: 400px;height: 300px;" src="{{url_for('static', filename=item.dish.image)}}">
+          <span style="font-weight: bold;background-color: rgba(0,0,0,0.5);border-radius: 10px;padding: 10px;" class="card-title">{{item.dish.name}}</span>
+        </div>
+      </div>
+</div>
+</div>
+<form  action="{{url_for('order.delete_item',id=item.id)}}" method="POST">
+  <button class="waves-effect waves-light btn red lighten-1" type="submit">Remove</button>
+  <a class="waves-effect waves-light btn" href="{{url_for('order.show_cart')}}">Cancel</a>
+</form>
+</div>
+{% endblock %}

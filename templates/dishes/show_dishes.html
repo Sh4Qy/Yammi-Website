@@ -1,0 +1,54 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+{% with add = get_flashed_messages(category_filter=['add']) %}
+{% if add %}
+{% for message in add %}
+        <div style="font-weight: bold;font-size: 20px;" class="card-panel white-text teal lighten-2 center">{{message}}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div style="display: flex;flex-wrap: wrap;">
+{% for dish in category.dishes %}
+<div class="row">
+  <div style="width: 600px;height: 300px;margin-top: 30px;" class="container">
+    <div style="margin-left: 70px;" class="col s12 m10">
+      <div class="card">
+        <div class="card-image">
+          <img style="height: 300px;" src="{{url_for('static', filename=dish.image)}}">
+          <span style="font-weight: bold;background-color: rgba(0,0,0,0.5);border-radius: 10px;padding: 10px;" class="card-title">{{dish.name}}</span>
+        </div>
+        <div class="card-content">
+          <p class="center" style="margin-bottom: 10px;font-weight: bold;">{{dish.description}}</p>
+          <table style="font-weight: bold;font-size: 20px">
+            <tr></tr>
+            <tr>
+              <td>Cost</td>
+              <td>
+                {{dish.price}}₪
+              </td>
+            </tr>
+            <tr>
+              <td>Gluten Free</td>
+              <td>{% if dish.is_gluten_free %}yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+              <td>Vegeterian</td>
+              <td>{% if dish.is_vegeterian %}yes{% else %}No{% endif %}</td>
+            </tr>
+          </table>
+        </div>
+        <div>
+            <form action="{{url_for('order.add_to_cart',id=dish.id)}}" method="POST">
+                <div>{{form.amount.label (style="font-size:20px; margin-left:10px")}}</div>
+                <div>{{form.amount (class="browser-default")}}</div>
+                <button type="submit" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></button>
+                </form>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

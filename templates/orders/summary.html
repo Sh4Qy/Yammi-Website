@@ -1,0 +1,33 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+<div class="container">
+
+    <h1 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+     class="center">Thank You {{delivery.cart.user.username}}</h1>
+    <h3 style="font-family: Arial, Helvetica, sans-serif" class="center">Delivery Number : {{delivery.id}}</h3>
+    <div class="card">
+    <table style="color:aliceblue" class="centered blue-grey">
+        <thead>
+          <tr style="border-width: 10px;">
+              <th>Address</th>
+              <th>Comment</th>
+              <th>When Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{delivery.address}}</td>
+            <td>{% if len(delivery.comment) > 20 %}
+                <a class="waves-effect waves-light btn-small" href="{{url_for('order.see_comment_summary',id=delivery.id)}}" >See Comment</a>
+                {% else %} {{delivery.comment}} {% endif %}</td>
+            <td>{{delivery.created.strftime("%m / %d - %H:%M")}}</td>
+          </tr>
+        </tbody>
+    </table>
+    </div>
+    <div style="margin-bottom: 30px;" class="center">
+        <a class="waves-effect waves-light btn blue-grey" href="{{url_for('category.menu')}}">Back to Menu</a>
+    </div>
+    </div>
+{% endblock %}

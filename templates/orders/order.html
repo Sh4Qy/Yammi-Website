@@ -1,0 +1,31 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+<div style="font-weight: bold;" class="container">
+<div class="card">
+<form action="{{url_for('order.order')}}" method="POST">
+<div>{{form.address.label (style="font-size:20px")}}</div>
+<div>{{form.address}}</div>
+<div>{{form.comment.label (style="font-size:20px")}}</div>
+<div>{{form.comment}}</div>
+<div class="center">
+<table class="centered" style="width: 300px;margin-left: 500px;">
+    {% for item in items %}
+    <tr>
+    <td>
+        {{item.dish.name}} : {{item.amount}} - {{item.dish.price}}₪
+    </td>
+</tr>
+    {% endfor %}
+<tr>
+    <td style="font-size: 25px;"> Total Cost {{cost}}₪</td>
+</tr>
+</table>
+<div style="padding: 20px;">
+<button type="submit" class="waves-effect waves-light btn-large">Pay</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+{% endblock %}

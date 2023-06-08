@@ -1,0 +1,30 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+<div class="container">
+    <div class="card">
+    <table style="color:aliceblue" class="centered blue-grey">
+        <thead>
+          <tr style="border-width: 10px;">
+              <th>Order Number</th>
+              <th>Address</th>
+              <th>When Created</th>
+              <th>Was Ordered</th>
+              <th>Total Cost</th>
+          </tr>
+        </thead>
+        {% for delivery in deliveries %}
+        <tbody>
+          <tr>
+            <td>{{delivery.id}}</td>
+            <td>{{delivery.address}}</td>
+            <td>{{delivery.created.strftime("%d/%m/%Y - %H:%M")}}</td>
+            <td>{% for item in delivery.cart.dish_association %}{{item.dish.name}} - {{item.amount}}<br/>{% endfor %}</td>
+            <td>{{delivery.cart.total_cost}}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    </div>
+    </div>
+    {% endblock %}

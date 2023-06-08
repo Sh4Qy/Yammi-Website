@@ -1,0 +1,26 @@
+{% extends 'layouts/main_layout.html' %}
+{% block content %}
+<div style="margin: 100px 0px 0px 270px" class="container">
+<a style="border-radius: 20px;color:black;font-weight: bold;" class="waves-effect waves-light btn grey lighten-4" style="margin: 50px 0px 0px 0px" href="{{url_for('user.main')}}">Back</a>
+<form style="margin: 200px 150px 0px 0px;width: 300px;" action="{{url_for('user.sign_in')}}" method="POST">
+    <div>{{form.username.label (style="border-radius:10px;background-color:rgba(0,0,0,0.5);color:white;font-weight: bold; font-size:25px")}}</div>
+    <div>{{form.username (style="background-color:rgba(0,0,0,0.5);color: white;font-size:20px; font-weight:bold")}}</div>
+    <div>{{form.password.label (style="border-radius:10px;background-color:rgba(0,0,0,0.5);color:white;font-weight: bold; font-size:25px")}}</div>
+    <div>{{form.password (style="background-color:rgba(0,0,0,0.5);color: white;font-size:20px; font-weight:bold")}}</div>
+    {% with error = get_flashed_messages(category_filter=['error']) %}
+{% if error %}
+    {% for message in error %}
+        <div  class="card-panel white-text red lighten-1">{{message}}</div>
+    {% endfor %}
+{% endif %} 
+{% endwith %}
+    <div class="center"><p>
+        <label>
+          {{form.remember_me (class="filled-in")}}
+          <span>{{form.remember_me.label (style="color:white;font-weight: bold; font-size:15px")}}</span>
+        </label>
+      </p>
+    <button style="border-radius: 20px;color:black;font-weight: bold;" type="submit" class="waves-effect waves-light btn-large grey lighten-4">Sign In</button></div>
+</form>
+</div>
+{% endblock %}

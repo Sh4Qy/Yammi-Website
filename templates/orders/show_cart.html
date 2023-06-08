@@ -1,0 +1,56 @@
+{% if current_user.is_staff %} {% extends 'layouts/admin_layout.html' %}
+{% else %} {% extends 'layouts/layout.html' %} {% endif %}
+{% block content %}
+{% if len(items) == 0 %}
+<h1 style="font-weight: bold;font-family: Arial, Helvetica, sans-serif;font-size: 200px;margin-top: 200px;" class="center">Cart is Empty</h1>
+{% else %}
+<div style="margin-right: 50px;" class="right">
+    <h2>Total Cost: {{total_cost}} ₪</h2>
+    <div class="center">
+    <a class="waves-effect waves-light btn-large" href="{{url_for('order.order')}}">Continue to Delivery</a>
+  </div>
+  </div>
+<div style="display: flex;flex-wrap: wrap;">
+{% for item in items %}
+<div class="row">
+    <div style="width: 600px;height: 300px;margin-top: 30px;">
+      <div style="margin-left: 70px;" class="col s12 m10">
+        <div class="card">
+          <div class="card-image">
+            <img style="height: 300px;" src="{{url_for('static',filename=item.dish.image)}}">
+            <span style="font-weight: bold;background-color: rgba(0,0,0,0.5);border-radius: 10px;padding: 10px;" class="card-title">{{item.dish.name}}</span>
+          </div>
+          <div class="card-content">
+            <table style="font-weight: bold;font-size: 20px;">
+              <tr>
+                <td>Cost</td>
+                <td>
+                  {{item.dish.price}}₪
+                </td>
+              </tr>
+              <tr>
+                <td>Gluten Free</td>
+                <td>{% if item.dish.is_gluten_free %}yes{% else %}No{% endif %}</td>
+              </tr>
+              <tr>
+                <td>Vegeterian</td>
+                <td>{% if item.dish.is_vegeterian %}yes{% else %}No{% endif %}</td>
+              </tr>
+              <tr>
+                <td>Amount</td>
+                <td>{{item.amount}}</td>
+              </tr>
+            </table>
+            <div style="margin-top: 10px;font-weight: bold;font-size: 20px;" class="center">
+                <span class="right">Total : {{item.amount * item.dish.price}} ₪</span>
+            <a class="waves-effect waves-light btn red lighten-1" href="{{url_for('order.delete_item',id=item.id)}}">Remove</a>
+        </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    {% endfor %}
+  </div>
+    {% endif %}
+{% endblock %}
